@@ -6,19 +6,6 @@ from tkinter import ttk
 import random
 
 
-def create_board(n, m):
-    board = []
-    for i in range(n):
-        row = []
-        for j in range(m):
-            row.append(0)
-        board.append(row)
-    return board
-
-
-def display_board(board):
-    for row in board:
-        print(row)
 
 
 def draw_on_canvas(board, ants):
@@ -40,12 +27,12 @@ def clear_canvas():
 
 
 def run_ants_langton(n, number_ants, iterations):
-    board = create_board(n, n)
-    ants = [Ant(n) for i in range(number_ants)]
-    antsLangton = Alg_Ants_Langton()
-    board = antsLangton.alg(board, ants, iterations)
+    # n - rozmiar planszy
+    # number_ants - liczba mrówek na planszy
+    ants_langton = Alg_Ants_Langton(n, number_ants)
+    board = ants_langton.alg(iterations)
     clear_canvas()
-    draw_on_canvas(board, ants)
+    draw_on_canvas(board, ants_langton.ants)
 
 
 # def rgb_color(rgb):

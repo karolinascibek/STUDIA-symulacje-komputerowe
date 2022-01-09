@@ -1,10 +1,37 @@
+from Ant import Ant
+
 class Alg_Ants_Langton():
 
-    def alg(self, board, ants, iterations):
-        n = len(board)
+    ants = []
+    n = 100
+
+    def __init__(self, n, number_ants):
+        self.ants = self.create_ants(number_ants, n)
+        self.n = n
+
+    def create_board(self, n, m):
+        self.n = n
+        board = []
+        for i in range(n):
+            row = []
+            for j in range(m):
+                row.append(0)
+            board.append(row)
+        return board
+
+    def display_board(self, board):
+        for row in board:
+            print(row)
+
+    def create_ants(self, number_ants, n):
+        return [Ant(n) for i in range(number_ants)]
+
+    def alg(self, iterations):
+        n = self.n
+        board = self.create_board(n, n)
 
         for i in range(iterations):
-            for idx, ant in enumerate(ants):
+            for idx, ant in enumerate(self.ants):
                 x, y = ant.current_coord
 
                 if x < 0:
@@ -26,3 +53,4 @@ class Alg_Ants_Langton():
                     board[x][y] = 0
                     ant.move("R")
         return board
+
