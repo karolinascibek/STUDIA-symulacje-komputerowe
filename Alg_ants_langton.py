@@ -1,13 +1,16 @@
 from Ant import Ant
 
+
 class Alg_Ants_Langton():
 
     ants = []
     n = 100
+    board = []
 
     def __init__(self, n, number_ants):
         self.ants = self.create_ants(number_ants, n)
         self.n = n
+        self.board = self.create_board(n, n)
 
     def create_board(self, n, m):
         self.n = n
@@ -26,31 +29,35 @@ class Alg_Ants_Langton():
     def create_ants(self, number_ants, n):
         return [Ant(n) for i in range(number_ants)]
 
+    def check_coord(self, ant, n):
+        x, y = ant.current_coord
+        if x < 0:
+            x = n - 1
+        if x >= n:
+            x = 0
+        if y < 0:
+            y = n - 1
+        if y >= n:
+            y = 0
+        ant.set_current_coord(x, y)
+
     def alg(self, iterations):
         n = self.n
-        board = self.create_board(n, n)
 
         for i in range(iterations):
             for idx, ant in enumerate(self.ants):
+                self.check_coord(ant, n)
                 x, y = ant.current_coord
 
-                if x < 0:
-                    ant.set_current_coord(n - 1, y)
-                if x >= n:
-                    ant.set_current_coord(0, y)
-                if y < 0:
-                    ant.set_current_coord(x, n - 1)
-                if y >= n:
-                    ant.set_current_coord(x, 0)
-
-                x, y = ant.current_coord
-
-                if board[x][y] == 0:
-                    board[x][y] = idx+1
+                if self.board[x][y] == 0:
+                    self.board[x][y] = idx+1
                     ant.move("L")
 
                 else:
-                    board[x][y] = 0
+                    self.board[x][y] = 0
                     ant.move("R")
-        return board
+
+                self.check_coord(ant, n)
+
+        return self.board
 

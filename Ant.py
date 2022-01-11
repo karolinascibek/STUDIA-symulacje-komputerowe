@@ -18,9 +18,6 @@ class Ant():
         self.direction = list(self.coord_moves.keys())[random.randint(0, 3)]
         self.draw_color()
 
-    def draw_positions(self):
-        pass
-
     def draw_color(self):
         rgb = (random.randrange(255), random.randrange(255), random.randrange(255))
         self.color = '#%02x%02x%02x' % rgb

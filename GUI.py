@@ -14,17 +14,18 @@ def draw_on_canvas(board, ants):
             for idx, ant in enumerate(ants):
                 if board[i][j] == idx+1:
                     canvas.create_rectangle(i*d, j*d, i*d + d, j*d + d, fill=ant.color, outline=ant.color)
+
     # wyświtlenie aktualnych współrzędnych mórwek
     for ant in ants:
         x, y = ant.current_coord
-        canvas.create_oval(x * d, y * d, x * d + d, y * d + d, fill=ant.color, outline="white")
+        canvas.create_oval(x * d, y * d, x * d + d, y * d + d, fill="blue", outline="white")
 
 
 def clear_canvas():
     canvas.delete("all")
 
 
-def run_ants_langton(n, number_ants, iterations):
+def run_ants_langton_1(n, number_ants, iterations):
     # n - rozmiar planszy
     # number_ants - liczba mrówek na planszy
     ants_langton = Alg_Ants_Langton(n, number_ants)
@@ -32,6 +33,20 @@ def run_ants_langton(n, number_ants, iterations):
     clear_canvas()
     draw_on_canvas(board, ants_langton.ants)
 
+
+def move_ants(ants_langton, iterations):
+    clear_canvas()
+    board = ants_langton.alg(1)
+    draw_on_canvas(board, ants_langton.ants)
+    if iterations > 0:
+        canvas.after(500, lambda:move_ants(ants_langton, iterations - 1))
+
+
+def run_ants_langton_steps(n, number_ants, iterations):
+    # n - rozmiar planszy
+    # number_ants - liczba mrówek na planszy
+    ants_langton = Alg_Ants_Langton(n, number_ants)
+    move_ants(ants_langton, iterations)
 
 # def rgb_color(rgb):
 #    return '#%02x%02x%02x' % rgb
@@ -52,22 +67,29 @@ def submit():
         iterations = int(entry_iterations.get())
         number_ants = int(entry_numer_ants.get())
 
+
         # wykonaj algorytm
-        run_ants_langton(n, number_ants, iterations)
+        if radio_var.get() == 1:
+            run_ants_langton_1(n, number_ants, iterations)
+        else:
+            run_ants_langton_steps(n, number_ants, iterations)
+
         label_message.config(text="", fg="red")
     except:
-        label_message.config(text="ERROR: Coś poszło nie tak!!\nSprawdź czy wszytkie wprowadzone wartości są liczbami.", fg="red")
-
-# --- ustawienia dla symulacji
+        label_message.config(text="ERROR: Coś poszło nie tak!!\nSprawdź czy wszytkie wprowadzone wartości są liczbami.",fg="red")
 
 
-print("Koniec")
+# ------------------------------------------------------------------------
+# ------------------- GUI ------------------------------------------------
+# ------------------------------------------------------------------------
+
 
 window_width = 700
 window_height = 500
 
 window = tk.Tk()
 window.geometry("700x550")
+
 
 # ----------------- legend ----------------------------
 
@@ -94,6 +116,7 @@ settings_label.grid(row=0, column=0, sticky="we")
 separator = ttk.Separator(settings, orient='horizontal')
 separator.grid(row=1, column=0,  sticky="we", pady=3)
 
+# ----------------- entry number ants  ----------------------------
 
 entry_label1 = tk.Label(settings, text="l. mrówek")
 entry_label1.grid(row=2, column=0, sticky="w", pady=[10, 0])
@@ -103,6 +126,8 @@ entry_numer_ants = tk.Entry(settings, font=('Arial', 10), width=15, relief=tk.FL
 entryText_number_ants.set("3")
 entry_numer_ants.grid(row=3, column=0, sticky="we")
 
+# ----------------- entry iterations  ----------------------------
+
 entry_label2 = tk.Label(settings, text="l. iteracji")
 entry_label2.grid(row=4, column=0, sticky="w",  pady=[10, 0])
 
@@ -111,7 +136,9 @@ entry_iterations = tk.Entry(settings, font=('Arial', 10), width=15, relief=tk.FL
 entryText_iterations.set("11000")
 entry_iterations.grid(row=5, column=0, sticky="we")
 
-entry_label3 = tk.Label(settings, text="nxn")
+# ----------------- entry board size  ----------------------------
+
+entry_label3 = tk.Label(settings, text="nxn(px)")
 entry_label3.grid(row=6, column=0, sticky="w",  pady=[10, 0])
 
 entryText_board_size = tk.StringVar()
@@ -119,27 +146,30 @@ entry_board_size = tk.Entry(settings, font=('Arial', 10), width=15, relief=tk.FL
 entryText_board_size.set("100")
 entry_board_size.grid(row=7, column=0, sticky="we")
 
+
+# ----------------- radio  --------------------------------------
+radio_var = tk.IntVar()
+radio_var.set(1)
+radio_label = tk.Label(settings, text="Wizualizacja")
+separator = ttk.Separator(settings, orient='horizontal')
+radio_v1 = tk.Radiobutton(settings, text="wynik", variable=radio_var, value=1)
+radio_v2 = tk.Radiobutton(settings, text="kroki", variable=radio_var, value=2)
+
+radio_label.grid(row=9, column=0, sticky="w",  pady=[20, 0])
+separator.grid(row=10, column=0,  sticky="we", pady=[3, 0])
+radio_v1.grid(row=11, column=0, sticky="w", pady=[0, 0])
+radio_v2.grid(row=12, column=0, sticky="w", pady=[0, 0])
+
+# ----------------- btn settings save ----------------------------
+
 btn_save = tk.Button(settings, text="Zapisz", fg="black", command=submit)
-btn_save.grid(row=8, column=0, sticky="we", pady=[10, 0])
+btn_save.grid(row=13, column=0, sticky="we", pady=[10, 0])
 
 # ------------------ info ------------------------------------------
 
-label_message = tk.Label(window, text="nxn(px)")
+label_message = tk.Label(window, text="")
 label_message.grid(row=1, column=0, columnspan=3, sticky="we")
-
 
 window.mainloop()
 
-# for i in range(n):
-#     for j in range(n):
-#         for idx, ant in enumerate(ants):
-#             if board[i][j] == idx+1:
-#                 plt.plot(i, j, "."+colors[idx], alpha=0.7)
-#
-# for ant in ants:
-#     plt.plot(ant.current_coord[0], ant.current_coord[1], ".b")
-#
-# plt.axis([0, n, 0, n])
-# plt.show()
-#display_board(board)
-    # print("------------------------------------------------")
+
