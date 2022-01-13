@@ -121,6 +121,7 @@ class GUI():
         self.clear_canvas()
         board = ants_langton.alg(1)
         self.draw_on_canvas(board, ants_langton.ants)
+        self.label_message.config(text="Krok: "+str(iterations), fg="green")
         if iterations > 0:
             self.canvas.after(500, lambda: self.move_ants(ants_langton, iterations - 1))
 

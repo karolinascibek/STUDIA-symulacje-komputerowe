@@ -52,7 +52,6 @@ class Alg_Ants_Langton():
                 if self.board[x][y] == 0:
                     self.board[x][y] = idx+1
                     ant.move("L")
-
                 else:
                     self.board[x][y] = 0
                     ant.move("R")
