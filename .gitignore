@@ -139,3 +139,4 @@ cython_debug/
 
 # custom folder
 test.py
+testowe/
