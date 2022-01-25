@@ -22,13 +22,16 @@ class Ant():
         rgb = (random.randrange(255), random.randrange(255), random.randrange(255))
         self.color = '#%02x%02x%02x' % rgb
 
+    # metoda obrucenia mrówki i przesunięcia jej na następną komórkę
+    # parametrm jest "R" - ruch w prawo strone, "L" - ruch w prawo strone
     def move(self, side):
-        # ruch w lewo z kierunku w jakim ustawiona jest mrówka
+        # self.direction - każda mrówka ma ustawiony aktualny kierunek w jakim jest ustawiona
+        # ustalenie przyszłego ustawienia w zależności od prarametru side
         direction = self.direction_moves[side][self.direction]
 
         # przesunięcie mrówki
-        x = self.current_coord[0] + self.coord_moves[direction][0]
-        y = self.current_coord[1] + self.coord_moves[direction][1]
+        x = self.current_coord[0] + self.coord_moves[direction][0] # aktualizowanie współrzędnej mrówki x
+        y = self.current_coord[1] + self.coord_moves[direction][1] # aktualizowanie współrzędnej mrówki y
         self.current_coord = (x, y)
 
         # ustawienie akltualnego kierunku mrówki

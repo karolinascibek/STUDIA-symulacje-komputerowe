@@ -47,7 +47,7 @@ class GUI():
     radio_v2 = tk.Radiobutton(settings, text="kroki", variable=radio_var, value=2)
 
     # ----------------- btn settings save ----------------------------
-    btn_save = tk.Button(settings, text="Zapisz", fg="black")
+    btn_save = tk.Button(settings, text="Start", fg="black")
 
     # ------------------ info ------------------------------------------
     label_message = tk.Label(window, text="")
@@ -118,19 +118,22 @@ class GUI():
         self.clear_canvas()
         self.draw_on_canvas(board, ants_langton.ants)
 
-    def move_ants(self, ants_langton, iterations):
+    def move_ants(self, ants_langton, iterations, k):
         self.clear_canvas()
-        board = ants_langton.alg(1)
+        if k == 1:
+            board = ants_langton.board
+        else:
+            board = ants_langton.alg(1)
         self.draw_on_canvas(board, ants_langton.ants)
-        self.label_message.config(text="Krok: "+str(iterations), fg="green")
-        if iterations > 0:
-            self.canvas.after(500, lambda: self.move_ants(ants_langton, iterations - 1))
+        self.label_message.config(text="Krok: "+str(k), fg="green")
+        if iterations > 1:
+            self.canvas.after(500, lambda: self.move_ants(ants_langton, iterations - 1, k+1))
 
     def run_ants_langton_steps(self, n, number_ants, iterations):
         # n - rozmiar planszy
         # number_ants - liczba mrówek na planszy
         ants_langton = Alg_Ants_Langton(n, number_ants)
-        self.move_ants(ants_langton, iterations)
+        self.move_ants(ants_langton, iterations, 1)
 
     def submit(self):
         try:
