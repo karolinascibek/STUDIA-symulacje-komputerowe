@@ -1,5 +1,5 @@
 # STUDIA-symulacje-komputerowe
-#####Projekt Mrówki Langtona został wykonany w ramach przedmiotu na studiach Symulacje Komputerowe
+#### Projekt Mrówki Langtona został wykonany w ramach przedmiotu na studiach Symulacje Komputerowe
 ```
 Założenia projektu:
 1. Stworzenie symulacji dla n-mrówek poruszających się zadaną liczbę iteracji po planszy
