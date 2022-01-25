@@ -12,7 +12,7 @@ Założenia projektu:
 ## Interface
 ![Interfejs po uruchomieniu programu](./img/ekran1.png)
 
-##Przykładowa symulacja dla 4 mrówek
+## Przykładowa symulacja dla 4 mrówek
 #### W krokach 
 
 ![Interfejs po uruchomieniu programu](./img/sym2.png)
