@@ -1,5 +1,5 @@
-from Ant import Ant
-from Alg_ants_langton import Alg_Ants_Langton
+from ants_langtona.ant_model import Ant
+from ants_langtona.ants_langton_service import Ants_Langton
 import tkinter as tk
 from tkinter import ttk
 
@@ -113,7 +113,7 @@ class GUI():
     def run_ants_langton_1(self, n, number_ants, iterations):
         # n - rozmiar planszy
         # number_ants - liczba mrówek na planszy
-        ants_langton = Alg_Ants_Langton(n, number_ants)
+        ants_langton = Ants_Langton(n, number_ants)
         board = ants_langton.alg(iterations)
         self.clear_canvas()
         self.draw_on_canvas(board, ants_langton.ants)
@@ -132,7 +132,7 @@ class GUI():
     def run_ants_langton_steps(self, n, number_ants, iterations):
         # n - rozmiar planszy
         # number_ants - liczba mrówek na planszy
-        ants_langton = Alg_Ants_Langton(n, number_ants)
+        ants_langton = Ants_Langton(n, number_ants)
         self.move_ants(ants_langton, iterations, 1)
 
     def submit(self):

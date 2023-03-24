@@ -1,7 +1,7 @@
-from Ant import Ant
+from ants_langtona.ant_model import Ant
 
 
-class Alg_Ants_Langton():
+class Ants_Langton():
 
     ants = []
     n = 100

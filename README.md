@@ -33,8 +33,31 @@ Założenia projektu:
 ## Edytor
 * PyCharm
 
-## Uruchomienie programu 
-nalezy pobrać repozytorium i uruchomic plik ```main.py ```
+# Installacja środowiska
 
+### Pobranie repozytorium
+```
+git clone git@github.com:karolinascibek/STUDIA-symulacje-komputerowe.git
+```
+### Przechodzimy do folderu projektu
+```
+cd /STUDIA-symulacje-komputerowe
+```
+### Tworzenie środowiska pythonowego
+```
+py -m venv venv  
+```
 
+### Uruchomienie środowiska pythonowego
+```
+venv/Scripts/activate 
+```
 
+### Installacja bibliotek
+```
+py -m pip install requirments.txt
+```
+# Uruchomienie programu 
+```
+python main.py
+```
